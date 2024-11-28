@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button class="button clear">C</button>
+            <button class="button delete">←</button>
+            <button class="button operator">%</button>
+            <button class="button operator">/</button>
+
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button operator">*</button>
+
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button operator">-</button>
+
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button operator">+</button>
+
+            <button class="button">0</button>
+            <button class="button decimal">.</button>
+            <button class="button equal">=</button>
+            <button class="button function" id="advanced-functions-btn">Advanced</button>
+        </div>
+
+        <div id="advanced-functions" class="advanced-functions hidden">
+            <button class="button function" data-func="√">√</button>
+            <button class="button function" data-func="sin">sin</button>
+            <button class="button function" data-func="cos">cos</button>
+            <button class="button function" data-func="tan">tan</button>
+            <button class="button function" data-func="log">log</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
