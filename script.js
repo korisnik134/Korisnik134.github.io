@@ -83,7 +83,7 @@ buttons.forEach(button => {
         resultShown = false;
       }
 
-      // Ako je procenat pritisnut, dodajemo procenat kao znak
+      // Ako je procenat pritisnut, odmah izračunavamo procenat
       if (value === '%') {
         // Ako imamo broj pre % simbola, odmah izračunavamo procenat
         if (expression && /^[\d\)]$/.test(expression.slice(-1))) {
