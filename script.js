@@ -11,12 +11,11 @@ buttons.forEach(button => {
     let value = e.target.textContent;
     console.log(`Pritisnuto dugme: ${value}`);
 
-    // Provera da li je kliknuto na dugme za promenu režima
+    // Provera za napredne funkcije
     if (e.target === advancedFunctionsBtn) {
-      // Toggle između prikaza "Advanced" i "Basic" funkcija
       advancedFunctions.classList.toggle('hidden');
       advancedFunctionsBtn.textContent = advancedFunctions.classList.contains('hidden') ? 'Advanced' : 'Basic';
-      return; // Izlazimo iz funkcije da sprečimo prikaz na ekranu
+      return;
     }
 
     // Clear display
@@ -43,12 +42,15 @@ buttons.forEach(button => {
           // Obrada procenta
           let evalExpression = expression.replace(/(\d+)%/g, "($1 / 100)");
 
-          // Modifikovano za procenat kao deo izraza
+          // Modifikacija za procenat unutar izraza
           evalExpression = evalExpression.replace(/(\d+)([-+*/])(\d+)\%/g, "($1$2($1 * ($3 / 100)))");
 
-          console.log(`Obrađen procenat: ${evalExpression}`);
+          // Dodavanje podrške za početne operatore
+          if (/^[+\-*/]/.test(evalExpression)) {
+            evalExpression = "0" + evalExpression;
+          }
 
-          // Obrada naprednih funkcija sa zagradama
+          // Obrada naprednih funkcija
           evalExpression = evalExpression.replace(/√(\d+)/g, "Math.sqrt($1)");
           evalExpression = evalExpression.replace(/sin(\d+)/g, "Math.sin($1)");
           evalExpression = evalExpression.replace(/cos(\d+)/g, "Math.cos($1)");
@@ -74,13 +76,12 @@ buttons.forEach(button => {
     }
     // Za operatore i brojeve
     else {
-      // Ako je rezultat prikazan, resetujemo izraz
+      // Ako je rezultat prikazan, resetujemo izraz na rezultat
       if (resultShown) {
-        expression = "";
+        expression = display.value; // koristi prethodni rezultat kao početak novog izraza
         resultShown = false;
       }
 
-      // Ako pritisneš broj ili operaciju, dodajemo to u trenutni izraz
       expression += value;
       display.value = expression;
       console.log(`Izraz nakon unosa: ${expression}`);
