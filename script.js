@@ -41,9 +41,9 @@ buttons.forEach(button => {
 
           // Obrada procenata: Zamenjujemo procenat sa brojem koji predstavlja
           let evalExpression = expression.replace(/(\d+)(%)/g, (match, num) => {
-            let percentage = (parseFloat(num) / 100) * parseFloat(num); // Izračunavanje procenta
-            console.log(`Procena: ${num}% = ${percentage}`);
-            return percentage; // Zamenjujemo procenat sa stvarnim brojem
+            let percentageValue = (parseFloat(num) / 100) * parseFloat(num); // Izračunavanje procenta
+            console.log(`Procena: ${num}% = ${percentageValue}`);
+            return percentageValue; // Zamenjujemo procenat sa stvarnim brojem
           });
 
           // Dodavanje podrške za početne operatore
