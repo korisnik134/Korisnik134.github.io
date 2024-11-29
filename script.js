@@ -39,11 +39,11 @@ buttons.forEach(button => {
         try {
           console.log(`Pre obračuna: ${expression}`);
 
-          // Obrada procenata: Zamenjujemo procenat sa brojem koji predstavlja
-          let evalExpression = expression.replace(/(\d+)(%)/g, (match, num) => {
-            let percentageValue = (parseFloat(num) / 100) * parseFloat(num); // Izračunavanje procenta
-            console.log(`Procena: ${num}% = ${percentageValue}`);
-            return percentageValue; // Zamenjujemo procenat sa stvarnim brojem
+          // Obrada procenata: Ako je procenat prisutan, izračunavamo stvarnu vrednost.
+          let evalExpression = expression.replace(/(\d+)\s?([+\-*/])\s?(\d+)%/g, (match, num1, operator, num2) => {
+            let percentage = (parseFloat(num2) / 100) * parseFloat(num1); // Izračunavanje procenta
+            console.log(`Procena: ${num1} ${operator} ${num2}% = ${percentage}`);
+            return `${num1} ${operator} ${percentage}`;
           });
 
           // Dodavanje podrške za početne operatore
@@ -76,11 +76,12 @@ buttons.forEach(button => {
 
       // Ako je procenat pritisnut, odmah izračunavamo procenat
       if (value === '%') {
-        // Ako imamo broj pre % simbola, odmah izračunavamo procenat
+        // Ako imamo broj pre %, odmah izračunavamo procenat
         if (expression && /^[\d\)]$/.test(expression.slice(-1))) {
-          let lastNumber = expression.match(/\d+$/)[0]; // Uzmi poslednji broj pre % simbola
-          let percentageValue = (parseFloat(lastNumber) / 100) * parseFloat(lastNumber); // Izračunaj vrednost procenta
-          expression = expression.slice(0, -lastNumber.length) + percentageValue; // Zamenjujemo broj sa procentom
+          let lastNumber = expression.match(/\d+$/)[0]; // Uzmi poslednji broj
+          let percentageValue = (parseFloat(lastNumber) / 100) * parseFloat(lastNumber); // Izračunaj procenat
+          expression = expression.slice(0, -lastNumber.length) + percentageValue; // Zamenjujemo procenat sa stvarnim brojem
+          display.value = expression; // Ažuriramo ekran odmah
         }
       } else {
         expression += value;
