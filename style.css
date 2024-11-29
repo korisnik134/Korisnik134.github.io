@@ -21,20 +21,20 @@ body {
     width: 100%;
     height: 50px;
     font-size: 32px;
-    text-align: right;
+    text-align: right; /* Tekst poravnat desno */
     background-color: #e4e4e4;
     border: none;
     border-radius: 5px;
     margin-bottom: 20px;
     padding: 10px;
-    direction: ltr; /* Sprečava da brojevi idu u pogrešnom smeru */
-    padding-right: 10px; /* Osigurava dodatni razmak sa desne strane */
+    box-sizing: border-box; /* Sprečava rastezanje */
 }
 
 .buttons {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 kolone, svaka kolona ima istu širinu */
+    grid-template-columns: repeat(4, 1fr); /* 4 kolone */
     gap: 10px;
+    width: 100%; /* Osigurava da dugmadi zauzimaju celu širinu */
 }
 
 .button {
@@ -46,10 +46,10 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     display: flex;
-    justify-content: center; /* Poravnava tekst u dugmadi */
-    align-items: center; /* Poravnava tekst u dugmadi */
-    width: 100%; /* Osigurava da dugmadi budu iste širine */
-    box-sizing: border-box; /* Osigurava da padding ne menja širinu */
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box; /* Sprečava probleme sa padding-om */
+    width: 100%; /* Dugmad zauzimaju punu širinu unutar mreže */
 }
 
 .button:hover {
@@ -68,7 +68,7 @@ body {
 .equal {
     background-color: #0b92d5;
     color: white;
-    grid-column: span 2; /* Ovaj dugme treba da zauzima dva mesta u mreži */
+    grid-column: span 2; /* Dugme "=" zauzima 2 kolone */
 }
 
 .equal:hover {
@@ -103,7 +103,7 @@ body {
 
 .advanced-functions {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 kolone za napredne funkcije */
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin-top: 10px;
 }
