@@ -67,6 +67,8 @@ buttons.forEach(button => {
         expression = "";
         resultShown = false;
       }
+
+      // Ako pritisneš broj ili operaciju, dodajemo to u trenutni izraz
       expression += value;
       display.value = expression;
     }
