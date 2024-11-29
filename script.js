@@ -81,6 +81,7 @@ buttons.forEach(button => {
 
       // Ako je procenat pritisnut, dodajemo procenat kao znak
       if (value === '%') {
+        // Da bi procenat radio, potrebno je povezati broj sa % i zameniti ga
         if (expression && /^[\d\)]$/.test(expression.slice(-1))) {
           expression += '%';  // Dodajemo samo znak procenata
         } else {
