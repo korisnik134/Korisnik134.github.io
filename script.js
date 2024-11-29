@@ -35,8 +35,8 @@ buttons.forEach(button => {
     else if (value === '=') {
       if (!resultShown) {
         try {
-          // Obrada procenta: zamenjujemo "%" sa "*1/100" kako bi se dobio pravi procenat
-          let evalExpression = expression.replace(/(\d+)%/g, "($1 * 1 / 100)");
+          // Obrada procenta: zamenjujemo "%" sa "*0.01" kako bi se dobio pravi procenat
+          let evalExpression = expression.replace(/(\d+)%/g, "($1 * 0.01)");
 
           // Obrada naprednih funkcija: √, sin, cos, tan, log
           evalExpression = evalExpression.replace(/√/g, "Math.sqrt");
