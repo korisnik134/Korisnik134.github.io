@@ -13,14 +13,15 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 300px;
+    width: 340px; /* Povećano za bolje raspoređivanje dugmadi */
+    margin: 0 auto; /* Centriranje kalkulatora */
 }
 
 #display {
-    font-family: 'Courier New', Courier, monospace; /* Monospace font za ravnu širinu */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font za konzistentan prikaz */
     width: 100%;
-    height: 50px;
-    font-size: 32px;
+    height: 60px; /* Više prostora za prikaz */
+    font-size: 28px; /* Manji font za bolju čitljivost */
     text-align: right; /* Tekst poravnat desno */
     background-color: #e4e4e4;
     border: none;
@@ -34,11 +35,11 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 kolone */
     gap: 10px;
-    width: 100%; /* Osigurava da dugmadi zauzimaju celu širinu */
+    width: 100%; /* Dugmad zauzimaju celu širinu */
 }
 
 .button {
-    font-size: 20px;
+    font-size: 18px;
     padding: 20px;
     background-color: #fff;
     border: 2px solid #d4d4d4;
@@ -49,7 +50,6 @@ body {
     justify-content: center;
     align-items: center;
     box-sizing: border-box; /* Sprečava probleme sa padding-om */
-    width: 100%; /* Dugmad zauzimaju punu širinu unutar mreže */
 }
 
 .button:hover {
@@ -84,7 +84,7 @@ body {
 }
 
 .clear {
-    background-color: #ff4d4d4d;
+    background-color: #ff4d4d;
     color: white;
 }
 
@@ -122,6 +122,7 @@ body {
 
 #advanced-functions-btn {
     background-color: #d9d9d9;
+    grid-column: span 4; /* Dugme "Advanced" zauzima celu širinu */
 }
 
 #advanced-functions-btn:hover {
