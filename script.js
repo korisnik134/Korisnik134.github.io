@@ -82,7 +82,20 @@ buttons.forEach(button => {
         resultShown = false;
       }
 
-      expression += value;
+      // Posebna obrada za procenat
+      if (value === '%') {
+        if (expression && /^[\d\)]$/.test(expression.slice(-1))) {
+          expression += '*0.01';
+        } else if (expression && /[-+*/]$/.test(expression.slice(-1))) {
+          expression += '0.01';
+        } else {
+          // Ako je samo procenat unet, dodaj procenat na poslednji broj
+          expression += '%';
+        }
+      } else {
+        expression += value;
+      }
+
       display.value = expression;
       console.log(`Izraz nakon unosa: ${expression}`);
     }
