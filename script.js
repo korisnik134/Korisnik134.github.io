@@ -9,30 +9,29 @@ let resultShown = false; // Prati da li je rezultat prikazan
 buttons.forEach(button => {
   button.addEventListener('click', (e) => {
     let value = e.target.textContent;
-    console.log(`Pritisnuto dugme: ${value}`);  // logujemo svaki pritisak dugmeta
+    console.log(`Pritisnuto dugme: ${value}`);
 
     // Provera da li je kliknuto na dugme za promenu režima
     if (e.target === advancedFunctionsBtn) {
       // Toggle između prikaza "Advanced" i "Basic" funkcija
       advancedFunctions.classList.toggle('hidden');
       advancedFunctionsBtn.textContent = advancedFunctions.classList.contains('hidden') ? 'Advanced' : 'Basic';
-      console.log('Napredne funkcije promenjene');
       return; // Izlazimo iz funkcije da sprečimo prikaz na ekranu
     }
 
     // Clear display
     if (value === 'C') {
+      console.log("Čišćenje ekrana");
       expression = "";
       display.value = "";
       resultShown = false;
-      console.log('Čišćenje ekrana');
     }
     // Delete last character
     else if (value === '←') {
       if (!resultShown) {
         expression = expression.slice(0, -1);
         display.value = expression;
-        console.log(`Obrisan poslednji karakter: ${expression}`);
+        console.log(`Izraz nakon brisanja: ${expression}`);
       }
     }
     // Equals operation
@@ -40,30 +39,34 @@ buttons.forEach(button => {
       if (!resultShown) {
         try {
           console.log(`Pre obračuna: ${expression}`);
-          // Obrada procenta: zamenjujemo "%" sa "* 0.01" za tačno računanje
-          let evalExpression = expression.replace(/(\d+)%/g, "($1 * 0.01)");
+
+          // Obrada procenta
+          let evalExpression = expression.replace(/(\d+)%/g, "($1 / 100)");
+
+          // Modifikovano za procenat kao deo izraza
+          evalExpression = evalExpression.replace(/(\d+)([-+*/])(\d+)\%/g, "($1$2($1 * ($3 / 100)))");
+
           console.log(`Obrađen procenat: ${evalExpression}`);
 
-          // Obrada naprednih funkcija: √, sin, cos, tan, log
-          evalExpression = evalExpression.replace(/√/g, "Math.sqrt");
-          evalExpression = evalExpression.replace(/sin/g, "Math.sin");
-          evalExpression = evalExpression.replace(/cos/g, "Math.cos");
-          evalExpression = evalExpression.replace(/tan/g, "Math.tan");
-          evalExpression = evalExpression.replace(/log/g, "Math.log");
+          // Obrada naprednih funkcija sa zagradama
+          evalExpression = evalExpression.replace(/√(\d+)/g, "Math.sqrt($1)");
+          evalExpression = evalExpression.replace(/sin(\d+)/g, "Math.sin($1)");
+          evalExpression = evalExpression.replace(/cos(\d+)/g, "Math.cos($1)");
+          evalExpression = evalExpression.replace(/tan(\d+)/g, "Math.tan($1)");
+          evalExpression = evalExpression.replace(/log(\d+)/g, "Math.log($1)");
 
           console.log(`Evaluacija izraza: ${evalExpression}`);
 
-          // Evaluacija izraza sa pravim prioritetima
+          // Evaluacija izraza
           let result = eval(evalExpression);
           console.log(`Rezultat evaluacije: ${result}`);
 
-          // Prikazivanje samo rezultata, bez Math funkcija u prikazu
+          // Prikaz rezultata
           display.value = result;
-
           expression = result.toString();
-          resultShown = true; // Postavljamo flag da je rezultat prikazan
+          resultShown = true;
         } catch (error) {
-          console.error(error);  // Ispis greške u konzolu za debugging
+          console.error(error);  // Logovanje greške
           display.value = "Error";
           expression = "";
         }
