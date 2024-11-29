@@ -35,6 +35,10 @@ buttons.forEach(button => {
     else if (value === '=') {
       if (!resultShown) {
         try {
+          // Obrada procenta
+          expression = expression.replace(/(\d+)%/g, "($1 / 100)"); // Zamenjujemo % sa / 100
+          
+          // Evaluacija izraza
           let result = eval(expression);
           display.value = `${expression} = ${result}`;
           expression = result.toString();
@@ -54,6 +58,33 @@ buttons.forEach(button => {
       }
       expression += value;
       display.value = expression;
+    }
+
+    // Provera naprednih funkcija
+    if (['√', 'sin', 'cos', 'tan', 'log'].includes(value)) {
+      if (resultShown) {
+        expression = ""; // Resetujemo izraz ako je prethodno prikazan rezultat
+        resultShown = false;
+      }
+
+      switch (value) {
+        case '√':
+          expression += 'Math.sqrt(';
+          break;
+        case 'sin':
+          expression += 'Math.sin(';
+          break;
+        case 'cos':
+          expression += 'Math.cos(';
+          break;
+        case 'tan':
+          expression += 'Math.tan(';
+          break;
+        case 'log':
+          expression += 'Math.log(';
+          break;
+      }
+      display.value = expression; // Ažuriraj prikaz sa novim izrazom
     }
   });
 });
