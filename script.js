@@ -35,12 +35,19 @@ buttons.forEach(button => {
     else if (value === '=') {
       if (!resultShown) {
         try {
-          // Obrada procenta
-          expression = expression.replace(/(\d+)%/g, "($1 / 100)"); // Zamenjujemo % sa / 100
-          
+          // Obrada procenta: zamenjujemo "%" sa "/100" samo prilikom evaluacije
+          let evalExpression = expression.replace(/(\d+)%/g, "($1/100)"); 
+
+          // Obrada naprednih funkcija: √, sin, cos, tan, log
+          evalExpression = evalExpression.replace(/√/g, "Math.sqrt");
+          evalExpression = evalExpression.replace(/sin/g, "Math.sin");
+          evalExpression = evalExpression.replace(/cos/g, "Math.cos");
+          evalExpression = evalExpression.replace(/tan/g, "Math.tan");
+          evalExpression = evalExpression.replace(/log/g, "Math.log");
+
           // Evaluacija izraza
-          let result = eval(expression);
-          display.value = `${expression} = ${result}`;
+          let result = eval(evalExpression);
+          display.value = result; // Prikazivanje samo rezultata, bez Math funkcija u prikazu
           expression = result.toString();
           resultShown = true; // Postavljamo flag da je rezultat prikazan
         } catch {
@@ -49,7 +56,7 @@ buttons.forEach(button => {
         }
       }
     }
-    // For operators and numbers
+    // Za operatore i brojeve
     else {
       // Ako je rezultat prikazan, kreni novi izraz
       if (resultShown) {
@@ -58,33 +65,6 @@ buttons.forEach(button => {
       }
       expression += value;
       display.value = expression;
-    }
-
-    // Provera naprednih funkcija
-    if (['√', 'sin', 'cos', 'tan', 'log'].includes(value)) {
-      if (resultShown) {
-        expression = ""; // Resetujemo izraz ako je prethodno prikazan rezultat
-        resultShown = false;
-      }
-
-      switch (value) {
-        case '√':
-          expression += 'Math.sqrt(';
-          break;
-        case 'sin':
-          expression += 'Math.sin(';
-          break;
-        case 'cos':
-          expression += 'Math.cos(';
-          break;
-        case 'tan':
-          expression += 'Math.tan(';
-          break;
-        case 'log':
-          expression += 'Math.log(';
-          break;
-      }
-      display.value = expression; // Ažuriraj prikaz sa novim izrazom
     }
   });
 });
