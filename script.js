@@ -35,7 +35,7 @@ buttons.forEach(button => {
     else if (value === '=') {
       if (!resultShown) {
         try {
-          // Obrada procenta: zamenjujemo "%" sa "*0.01" kako bi se dobio pravi procenat
+          // Obrada procenta: zamenjujemo "%" sa "*0.01"
           let evalExpression = expression.replace(/(\d+)%/g, "($1 * 0.01)");
 
           // Obrada naprednih funkcija: √, sin, cos, tan, log
