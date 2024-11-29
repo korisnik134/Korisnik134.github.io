@@ -45,7 +45,7 @@ buttons.forEach(button => {
           evalExpression = evalExpression.replace(/tan/g, "Math.tan");
           evalExpression = evalExpression.replace(/log/g, "Math.log");
 
-          // Evaluacija izraza
+          // Evaluacija izraza sa pravim prioritetima
           let result = eval(evalExpression);
 
           // Prikazivanje samo rezultata, bez Math funkcija u prikazu
@@ -62,7 +62,7 @@ buttons.forEach(button => {
     }
     // Za operatore i brojeve
     else {
-      // Ako je rezultat prikazan, kreni novi izraz
+      // Ako je rezultat prikazan, resetujemo izraz
       if (resultShown) {
         expression = "";
         resultShown = false;
