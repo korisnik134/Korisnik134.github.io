@@ -40,7 +40,7 @@ buttons.forEach(button => {
           console.log(`Pre obračuna: ${expression}`);
 
           // Obrada procenata: 10% treba biti interpretirano kao 10 / 100
-          let evalExpression = expression.replace(/(\d+)%/g, "($1 / 100)"); // Korekcija: PROCENAT ZAMENJUJEMO ISPRAVNO
+          let evalExpression = expression.replace(/(\d+)%/g, "($1 * 100 / 100)"); // Korekcija: PROCENAT ZAMENJUJEMO ISPRAVNO
 
           // Dodavanje podrške za početne operatore
           if (/^[+\-*/]/.test(evalExpression)) {
