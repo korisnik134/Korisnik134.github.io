@@ -51,15 +51,6 @@ buttons.forEach(button => {
             evalExpression = "0" + evalExpression;
           }
 
-          // Obrada naprednih funkcija
-          evalExpression = evalExpression.replace(/√(\d+)/g, "Math.sqrt($1)");
-          evalExpression = evalExpression.replace(/sin(\d+)/g, "Math.sin($1)");
-          evalExpression = evalExpression.replace(/cos(\d+)/g, "Math.cos($1)");
-          evalExpression = evalExpression.replace(/tan(\d+)/g, "Math.tan($1)");
-          evalExpression = evalExpression.replace(/log(\d+)/g, "Math.log($1)");
-
-          console.log(`Evaluacija izraza: ${evalExpression}`);
-
           // Evaluacija izraza
           let result = eval(evalExpression);
           console.log(`Rezultat evaluacije: ${result}`);
