@@ -39,11 +39,11 @@ buttons.forEach(button => {
         try {
           console.log(`Pre obračuna: ${expression}`);
 
-          // Obrada procenata: Ako je procenat prisutan, odmah ga zamenjujemo sa stvarnim brojem
-          let evalExpression = expression.replace(/(\d+)\s?([+\-*/])\s?(\d+)%/g, (match, num1, operator, num2) => {
-            let percentage = (parseFloat(num2) / 100) * parseFloat(num1); // Izračunavanje procenta
-            console.log(`Procena: ${num1} ${operator} ${num2}% = ${percentage}`);
-            return `${num1} ${operator} ${percentage}`; // Zamena procenata sa stvarnim brojem
+          // Obrada procenata: Zamenjujemo procenat sa brojem koji predstavlja
+          let evalExpression = expression.replace(/(\d+)(%)/g, (match, num) => {
+            let percentage = (parseFloat(num) / 100) * parseFloat(num); // Izračunavanje procenta
+            console.log(`Procena: ${num}% = ${percentage}`);
+            return percentage; // Zamenjujemo procenat sa stvarnim brojem
           });
 
           // Dodavanje podrške za početne operatore
@@ -85,9 +85,8 @@ buttons.forEach(button => {
 
       // Ako je procenat pritisnut, dodajemo procenat kao znak
       if (value === '%') {
-        // Da bi procenat radio, potrebno je povezati broj sa % i zameniti ga
+        // Ako imamo broj pre % simbola, odmah izračunavamo procenat
         if (expression && /^[\d\)]$/.test(expression.slice(-1))) {
-          // Zamenjujemo procenat sa stvarnim brojem (ne prikazujemo znak %)
           let lastNumber = expression.match(/\d+$/)[0]; // Uzmi poslednji broj pre % simbola
           let percentageValue = (parseFloat(lastNumber) / 100) * parseFloat(lastNumber); // Izračunaj vrednost procenta
           expression = expression.slice(0, -lastNumber.length) + percentageValue; // Zamenjujemo broj sa procentom
