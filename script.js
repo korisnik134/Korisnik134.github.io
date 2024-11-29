@@ -40,10 +40,10 @@ buttons.forEach(button => {
           console.log(`Pre obračuna: ${expression}`);
 
           // Obrada procenta
-          let evalExpression = expression.replace(/(\d+)%/g, "($1 / 100)");
-
-          // Modifikacija za procenat unutar izraza
-          evalExpression = evalExpression.replace(/(\d+)([-+*/])(\d+)\%/g, "($1$2($1 * ($3 / 100)))");
+          let evalExpression = expression.replace(/(\d+)%/g, "($1 * 0.01)");  // Zamena procenta sa *0.01
+          
+          // Obrada procenta u kontekstu izraza sa operatorima (npr. 400-10%)
+          evalExpression = evalExpression.replace(/(\d+)([-+*/])(\d+)\%/g, "($1$2($3 * 0.01))");
 
           // Dodavanje podrške za početne operatore
           if (/^[+\-*/]/.test(evalExpression)) {
@@ -82,15 +82,14 @@ buttons.forEach(button => {
         resultShown = false;
       }
 
-      // Posebna obrada za procenat
+      // Obrada procenta
       if (value === '%') {
         if (expression && /^[\d\)]$/.test(expression.slice(-1))) {
-          expression += '*0.01';
+          expression += '*0.01';  // Ako je broj pre procenata, dodaj *0.01
         } else if (expression && /[-+*/]$/.test(expression.slice(-1))) {
-          expression += '0.01';
+          expression += '0.01';  // Ako je operator pre procenata, dodaj samo procenat
         } else {
-          // Ako je samo procenat unet, dodaj procenat na poslednji broj
-          expression += '%';
+          expression += '%';  // Ako je samo procenat, dodaj ga
         }
       } else {
         expression += value;
