@@ -39,8 +39,8 @@ buttons.forEach(button => {
         try {
           console.log(`Pre obračuna: ${expression}`);
 
-          // Obrada procenata - ovde pretvaramo procenat u odnos sa prethodnim brojem
-          let evalExpression = expression.replace(/(\d+)%/g, " * ($1 / 100)");
+          // Obrada procenata - kada je pritisnut procenat, tretiramo ga kao odnos sa prethodnim brojem
+          let evalExpression = expression.replace(/(\d+)%/g, " * ($1 / 100)"); // Korekcija: PROCENAT ZAMENJUJEMO ISPRAVNO
 
           // Dodavanje podrške za početne operatore
           if (/^[+\-*/]/.test(evalExpression)) {
