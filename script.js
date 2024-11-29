@@ -39,8 +39,12 @@ buttons.forEach(button => {
         try {
           console.log(`Pre obračuna: ${expression}`);
 
-          // Obrada procenata: 10% treba biti interpretirano kao 10 / 100
-          let evalExpression = expression.replace(/(\d+)%/g, "($1 * 100 / 100)"); // Korekcija: PROCENAT ZAMENJUJEMO ISPRAVNO
+          // Obrada procenata: Ako je procenat prisutan, izračunavamo stvarnu vrednost.
+          let evalExpression = expression.replace(/(\d+)\s?([+\-*/])\s?(\d+)%/g, (match, num1, operator, num2) => {
+            let percentage = (parseFloat(num2) / 100) * parseFloat(num1); // Izračunavanje procenta
+            console.log(`Procena: ${num1} ${operator} ${num2}% = ${percentage}`);
+            return `${num1} ${operator} ${percentage}`;
+          });
 
           // Dodavanje podrške za početne operatore
           if (/^[+\-*/]/.test(evalExpression)) {
