@@ -43,13 +43,22 @@ buttons.forEach(button => {
           let evalExpression = expression.replace(/(\d+)\s?([+\-*/])\s?(\d+)%/g, (match, num1, operator, num2) => {
             let percentage = (parseFloat(num2) / 100) * parseFloat(num1); // Izračunavanje procenta
             console.log(`Procena: ${num1} ${operator} ${num2}% = ${percentage}`);
-            return `${num1} ${operator} ${percentage}`;
+            return `${num1} ${operator} ${percentage}`; // Zamenjujemo procenat stvarnim brojem
           });
 
           // Dodavanje podrške za početne operatore
           if (/^[+\-*/]/.test(evalExpression)) {
             evalExpression = "0" + evalExpression;
           }
+
+          // Obrada naprednih funkcija
+          evalExpression = evalExpression.replace(/√(\d+)/g, "Math.sqrt($1)");
+          evalExpression = evalExpression.replace(/sin(\d+)/g, "Math.sin($1 * Math.PI / 180)"); // Koristimo radijane za sin
+          evalExpression = evalExpression.replace(/cos(\d+)/g, "Math.cos($1 * Math.PI / 180)"); // Koristimo radijane za cos
+          evalExpression = evalExpression.replace(/tan(\d+)/g, "Math.tan($1 * Math.PI / 180)"); // Koristimo radijane za tan
+          evalExpression = evalExpression.replace(/log(\d+)/g, "Math.log($1)"); // log je prirodni log
+
+          console.log(`Evaluacija izraza: ${evalExpression}`);
 
           // Evaluacija izraza
           let result = eval(evalExpression);
@@ -77,7 +86,7 @@ buttons.forEach(button => {
       // Ako je procenat pritisnut, odmah izračunavamo procenat
       if (value === '%') {
         // Ako imamo broj pre %, odmah izračunavamo procenat
-        if (expression && /^[\d\)]$/.test(expression.slice(-1))) {
+        if (expression && /^[\d]$/.test(expression.slice(-1))) {
           let lastNumber = expression.match(/\d+$/)[0]; // Uzmi poslednji broj
           let percentageValue = (parseFloat(lastNumber) / 100) * parseFloat(lastNumber); // Izračunaj procenat
           expression = expression.slice(0, -lastNumber.length) + percentageValue; // Zamenjujemo procenat sa stvarnim brojem
