@@ -35,7 +35,7 @@ buttons.forEach(button => {
     else if (value === '=') {
       if (!resultShown) {
         try {
-          // Obrada procenta: zamenjujemo "%" sa "*0.01"
+          // Obrada procenta: zamenjujemo "%" sa "*0.01" za tačno računanje
           let evalExpression = expression.replace(/(\d+)%/g, "($1 * 0.01)");
 
           // Obrada naprednih funkcija: √, sin, cos, tan, log
@@ -60,17 +60,4 @@ buttons.forEach(button => {
         }
       }
     }
-    // Za operatore i brojeve
-    else {
-      // Ako je rezultat prikazan, resetujemo izraz
-      if (resultShown) {
-        expression = "";
-        resultShown = false;
-      }
-
-      // Ako pritisneš broj ili operaciju, dodajemo to u trenutni izraz
-      expression += value;
-      display.value = expression;
-    }
-  });
-});
+    // Za
