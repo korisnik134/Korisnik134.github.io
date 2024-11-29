@@ -35,8 +35,8 @@ buttons.forEach(button => {
     else if (value === '=') {
       if (!resultShown) {
         try {
-          // Obrada procenta: zamenjujemo "%" sa "/100" samo prilikom evaluacije
-          let evalExpression = expression.replace(/(\d+)%/g, "($1/100)"); 
+          // Obrada procenta: zamenjujemo "%" sa "*1/100" kako bi se dobio pravi procenat
+          let evalExpression = expression.replace(/(\d+)%/g, "($1 * 1 / 100)");
 
           // Obrada naprednih funkcija: √, sin, cos, tan, log
           evalExpression = evalExpression.replace(/√/g, "Math.sqrt");
@@ -53,7 +53,8 @@ buttons.forEach(button => {
 
           expression = result.toString();
           resultShown = true; // Postavljamo flag da je rezultat prikazan
-        } catch {
+        } catch (error) {
+          console.error(error);  // Ispis greške u konzolu za debugging
           display.value = "Error";
           expression = "";
         }
