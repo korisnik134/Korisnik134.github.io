@@ -47,7 +47,10 @@ buttons.forEach(button => {
 
           // Evaluacija izraza
           let result = eval(evalExpression);
-          display.value = result; // Prikazivanje samo rezultata, bez Math funkcija u prikazu
+
+          // Prikazivanje samo rezultata, bez Math funkcija u prikazu
+          display.value = result;
+
           expression = result.toString();
           resultShown = true; // Postavljamo flag da je rezultat prikazan
         } catch {
